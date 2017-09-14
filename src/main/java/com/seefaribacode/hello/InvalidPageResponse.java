@@ -2,32 +2,20 @@ package com.seefaribacode.hello;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
 
-class InvalidPageResponse
-{
+class InvalidPageResponse {
     HttpServletRequest servletRequest;
     HttpServletResponse servletResponse;
     PrintWriter writer;
 
-
-    public InvalidPageResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
-    {
-        try {
-            init(servletRequest, servletResponse);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
-
-    private void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
+    public InvalidPageResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
-        this.writer = servletResponse.getWriter();
+        this.writer = UncheckedUtil.getWriter(servletResponse);
     }
 
-    public void writeToResonseBody(){
+    public void writeToResonseBody() {
         writer.print("The page you are looking for does not exist (yet).");
     }
 
