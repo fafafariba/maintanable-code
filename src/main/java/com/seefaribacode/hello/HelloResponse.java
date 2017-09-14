@@ -7,17 +7,15 @@ import java.io.PrintWriter;
 class HelloResponse {
     HttpServletRequest servletRequest;
     HttpServletResponse servletResponse;
-    String name;
-    PrintWriter writer;
 
     public HelloResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
-        this.name = servletRequest.getParameter("target");
-        this.writer = UncheckedUtil.getWriter(servletResponse);
     }
 
     public void writeToResponseBody() {
+        String name = servletRequest.getParameter("target");
+        PrintWriter writer = UncheckedUtil.getWriter(servletResponse);
         writer.print(String.format("hello %s", name));
     }
 
