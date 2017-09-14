@@ -8,12 +8,12 @@ class RouteHandler {
     HttpServletRequest servletRequest;
     HttpServletResponse servletResponse;
 
-    public RouteHandler(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
+    public RouteHandler(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
     }
 
-    public void dispatch() throws IOException {
+    public void dispatch() {
         String url = servletRequest.getRequestURI();
         if (url.equals("/hello")) {
 

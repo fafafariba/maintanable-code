@@ -13,7 +13,15 @@ class AddResponse {
     int sum;
     PrintWriter writer;
 
-    public AddResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
+    public AddResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+        try {
+            init(servletRequest, servletResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    private void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
         this.left = servletRequest.getParameter("left");

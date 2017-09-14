@@ -7,30 +7,28 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
-public class AppTest {
+public class RouteHanderTest {
     @Test
-    public void shouldGreetTargetValue() throws ServletException, IOException {
-        //given
+    public void shouldGreetTargetValue()  {
+        // given
         String expected = "hello world";
         String targetValue = "world";
         String url = "/hello";
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue);
         HttpServletResponseStub response = new HttpServletResponseStub();
 
-        //when
-        EntryServlet entryServlet = new EntryServlet();
-        entryServlet.service(request, response);
+        // when
+        RouteHandler routeHandler = new RouteHandler(request, response);
+        routeHandler.dispatch();
 
-
-        //then
+        // then
         String actual = response.textDisplayed();
         assertEquals("Output should be hello world ", expected, actual);
     }
 
     @Test
-    public void shouldAddTwoNumbers() {
-
-        //given
+    public void shouldAddTwoNumbers()  {
+        // given
         String expected = "2 + 3 = 5";
         String left = "2";
         String right = "3";
@@ -38,23 +36,11 @@ public class AppTest {
         HttpServletRequest request = new HttpServletRequestAddStub(url, left, right);
         HttpServletResponseStub response = new HttpServletResponseStub();
 
+        // when
+        RouteHandler routeHandler = new RouteHandler(request, response);
+        routeHandler.dispatch();
 
-        //when
-        EntryServlet entryServlet = new EntryServlet();
-
-        try {
-            entryServlet.service(request, response);
-        }
-        catch (IOException E)
-        {
-            System.out.println(E.getMessage());
-        }
-        catch (ServletException E)
-        {
-            System.out.println(E.getMessage());
-        }
-
-        //then
+        // then
         String actual = response.textDisplayed();
         assertEquals("Output should be 2 + 3 = 5", expected, actual);
     }
@@ -69,16 +55,9 @@ public class AppTest {
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue );
         HttpServletResponseStub response = new HttpServletResponseStub();
 
-
         //when
-        EntryServlet entryServlet = new EntryServlet();
-        try {
-            entryServlet.service(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        RouteHandler routeHandler = new RouteHandler(request, response);
+        routeHandler.dispatch();
 
         //then
         String actual = response.textDisplayed();

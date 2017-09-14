@@ -11,7 +11,15 @@ class HelloResponse {
     String name;
     PrintWriter writer;
 
-    public HelloResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
+    public HelloResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse)  {
+        try {
+            init(servletRequest, servletResponse);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    private void init(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
         this.name = servletRequest.getParameter("target");
@@ -19,7 +27,6 @@ class HelloResponse {
     }
 
     public void writeToResponseBody() {
-
         writer.print(String.format("hello %s", name));
     }
 
