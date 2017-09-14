@@ -1,15 +1,16 @@
 package com.seefaribacode.hello;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
 import org.junit.Test;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import static org.junit.Assert.assertEquals;
 
 
-public class RouteHanderTest {
+public class DispatcherTest {
     @Test
-    public void shouldGreetTargetValue()  {
+    public void shouldGreetTargetValue() {
         // given
         String expected = "hello world";
         String targetValue = "world";
@@ -18,8 +19,8 @@ public class RouteHanderTest {
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         // when
-        RouteHandler routeHandler = new RouteHandler(request, response);
-        routeHandler.dispatch();
+        Dispatcher dispatcher = newDispatcher(request, response);
+        dispatcher.dispatch();
 
         // then
         String actual = response.textDisplayed();
@@ -27,7 +28,7 @@ public class RouteHanderTest {
     }
 
     @Test
-    public void shouldAddTwoNumbers()  {
+    public void shouldAddTwoNumbers() {
         // given
         String expected = "2 + 3 = 5";
         String left = "2";
@@ -37,8 +38,8 @@ public class RouteHanderTest {
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         // when
-        RouteHandler routeHandler = new RouteHandler(request, response);
-        routeHandler.dispatch();
+        Dispatcher dispatcher = newDispatcher(request, response);
+        dispatcher.dispatch();
 
         // then
         String actual = response.textDisplayed();
@@ -52,16 +53,22 @@ public class RouteHanderTest {
         String expected = "The page you are looking for does not exist (yet).";
         String url = "/nothelloradd";
         String targetValue = "blah";
-        HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue );
+        HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue);
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         //when
-        RouteHandler routeHandler = new RouteHandler(request, response);
-        routeHandler.dispatch();
+        Dispatcher dispatcher = newDispatcher(request, response);
+        dispatcher.dispatch();
 
         //then
         String actual = response.textDisplayed();
         assertEquals("Output should be 'The page you are looking for does not exist (yet).' ", expected, actual);
+    }
+
+    Dispatcher newDispatcher(HttpServletRequest request, HttpServletResponse response) {
+        RouteDefinitions routeDefinitions = new HelloAppRouteDefinitions();
+        Dispatcher dispatcher = new Dispatcher(request, response, routeDefinitions);
+        return dispatcher;
     }
 }
 
