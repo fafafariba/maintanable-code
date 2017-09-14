@@ -20,7 +20,7 @@ public class DispatcherTest {
 
         // when
         Dispatcher dispatcher = newDispatcher(request, response);
-        dispatcher.dispatch();
+        dispatcher.dispatch(request, response);
 
         // then
         String actual = response.textDisplayed();
@@ -39,7 +39,7 @@ public class DispatcherTest {
 
         // when
         Dispatcher dispatcher = newDispatcher(request, response);
-        dispatcher.dispatch();
+        dispatcher.dispatch(request, response);
 
         // then
         String actual = response.textDisplayed();
@@ -58,7 +58,7 @@ public class DispatcherTest {
 
         //when
         Dispatcher dispatcher = newDispatcher(request, response);
-        dispatcher.dispatch();
+        dispatcher.dispatch(request, response);
 
         //then
         String actual = response.textDisplayed();
@@ -67,7 +67,7 @@ public class DispatcherTest {
 
     Dispatcher newDispatcher(HttpServletRequest request, HttpServletResponse response) {
         RouteDefinitions routeDefinitions = new HelloAppRouteDefinitions();
-        Dispatcher dispatcher = new Dispatcher(request, response, routeDefinitions);
+        Dispatcher dispatcher = new Dispatcher(routeDefinitions);
         return dispatcher;
     }
 }
