@@ -3,11 +3,11 @@ package com.seefaribacode.hello;
 public class HelloAppRouteDefinitions implements RouteDefinitions {
     public Handler lookup(String url) {
         if (url.equals("/hello")) {
-            return new HelloResponse();
+            return new HelloHandler();
         } else if (url.equals("/add")) {
-            return new AddResponse();
+            return new AddHandler();
         } else {
-            return new InvalidPageResponse();
+            return new InvalidPageHandler();
         }
     }
 }
