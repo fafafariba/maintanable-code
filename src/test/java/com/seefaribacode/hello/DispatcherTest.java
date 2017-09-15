@@ -4,77 +4,64 @@ import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 public class DispatcherTest {
     @Test
-    public void shouldGreetTargetValue() {
+    public void sendToCorrectPlace() {
         // given
-        String expected = "hello world";
-        String targetValue = "world";
-        String url = "/hello";
-        HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue);
-        HttpServletResponseStub response = new HttpServletResponseStub();
+        String requestUri = "/foo";
+        HttpServletRequest request = new HttpServletRequestStub(requestUri);
+        HttpServletResponseStub response = null;
+        Map<String, Handler> handlerMap = new HashMap<String, Handler>();
+        HandlerStub fooHandler = new HandlerStub();
+        handlerMap.put("/foo", fooHandler);
 
-        // when
-        Dispatcher dispatcher = newDispatcher(request, response);
-        dispatcher.dispatch(request, response);
-
-        // then
-        String actual = response.textDisplayed();
-        assertEquals("Output should be hello world ", expected, actual);
-    }
-
-    @Test
-    public void shouldAddTwoNumbers() {
-        // given
-        String expected = "2 + 3 = 5";
-        String left = "2";
-        String right = "3";
-        String url = "/add";
-        HttpServletRequest request = new HttpServletRequestAddStub(url, left, right);
-        HttpServletResponseStub response = new HttpServletResponseStub();
-
-        // when
-        Dispatcher dispatcher = newDispatcher(request, response);
-        dispatcher.dispatch(request, response);
-
-        // then
-        String actual = response.textDisplayed();
-        assertEquals("Output should be 2 + 3 = 5", expected, actual);
-    }
-
-    @Test
-    public void shouldShowInvalidPage() {
-
-        //given
-        String expected = "The page you are looking for does not exist (yet).";
-        String url = "/nothelloradd";
-        String targetValue = "blah";
-        HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue);
-        HttpServletResponseStub response = new HttpServletResponseStub();
-
-        //when
-        Dispatcher dispatcher = newDispatcher(request, response);
-        dispatcher.dispatch(request, response);
-
-        //then
-        String actual = response.textDisplayed();
-        assertEquals("Output should be 'The page you are looking for does not exist (yet).' ", expected, actual);
-    }
-
-    Dispatcher newDispatcher(HttpServletRequest request, HttpServletResponse response) {
-        RouteDefinitions routeDefinitions = new HelloAppRouteDefinitions();
+        RouteDefinitions routeDefinitions = new RouteDefinitionsStub(handlerMap);
         Dispatcher dispatcher = new Dispatcher(routeDefinitions);
-        return dispatcher;
+
+        // when
+        dispatcher.dispatch(request, response);
+
+        // then
+        assertThat(fooHandler.invocationCount, is(1));
+    }
+
+    class RouteDefinitionsStub implements RouteDefinitions {
+        final Map<String, Handler> map;
+
+        public RouteDefinitionsStub(Map<String, Handler> map) {
+            this.map = map;
+        }
+
+        public Handler lookup(String url) {
+            return map.get(url);
+        }
+    }
+
+    class HandlerStub implements Handler{
+        int invocationCount = 0;
+
+        public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+           invocationCount++;
+        }
+    }
+
+    class HttpServletRequestStub extends HttpServletRequestNotImplemented {
+        final String requestUri;
+
+        public HttpServletRequestStub(String requestUri) {
+            this.requestUri = requestUri;
+        }
+
+        @Override
+        public String getRequestURI() {
+            return requestUri;
+        }
     }
 }
-
-
-
-
-
-
-
