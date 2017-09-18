@@ -11,7 +11,7 @@ class InvalidPageResponse
     HttpServletResponse servletResponse;
 
 
-    public InvalidPageResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException
+    public InvalidPageResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
     {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
