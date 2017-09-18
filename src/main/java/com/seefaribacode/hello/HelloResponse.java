@@ -8,17 +8,20 @@ import java.io.PrintWriter;
 class HelloResponse {
     HttpServletRequest servletRequest;
     HttpServletResponse servletResponse;
-    String name;
-    PrintWriter writer;
 
-    public HelloResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException {
+    public HelloResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse)  {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
-        this.name = servletRequest.getParameter("target");
-        this.writer = servletResponse.getWriter();
     }
 
     public void writeToResponseBody() {
+        String name = servletRequest.getParameter("target");
+        PrintWriter writer = null;
+        try {
+            writer = servletResponse.getWriter();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
 
         writer.print(String.format("hello %s", name));
     }

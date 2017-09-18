@@ -9,17 +9,21 @@ class InvalidPageResponse
 {
     HttpServletRequest servletRequest;
     HttpServletResponse servletResponse;
-    PrintWriter writer;
 
 
     public InvalidPageResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws IOException
     {
         this.servletRequest = servletRequest;
         this.servletResponse = servletResponse;
-        this.writer = servletResponse.getWriter();
     }
 
     public void writeToResonseBody(){
+        PrintWriter writer = null;
+        try {
+            writer = servletResponse.getWriter();
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
         writer.print("The page you are looking for does not exist (yet).");
     }
 
