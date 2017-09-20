@@ -5,19 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class InvalidPageResponse
-{
-    HttpServletRequest servletRequest;
-    HttpServletResponse servletResponse;
+class InvalidResponse implements ResponseHandler{
 
-
-    public InvalidPageResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse)
-    {
-        this.servletRequest = servletRequest;
-        this.servletResponse = servletResponse;
-    }
-
-    public void writeToResonseBody(){
+    public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse){
         PrintWriter writer = null;
         try {
             writer = servletResponse.getWriter();

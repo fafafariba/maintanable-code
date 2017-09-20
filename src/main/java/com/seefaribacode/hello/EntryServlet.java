@@ -15,3 +15,8 @@ public class EntryServlet extends HttpServlet {
     }
 }
 
+// Qs
+// 1 Handle exception with throw or try/catch ?
+// 2 Have to invoke EntryServlet.service to start, good thing or bad thing?
+//   (vs. init where just creating a new instance of Entry Servlet would be enough to invoke inject
+//   Or does it not matter?

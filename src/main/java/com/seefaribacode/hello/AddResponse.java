@@ -6,20 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-class AddResponse {
-    HttpServletRequest servletRequest;
-    HttpServletResponse servletResponse;
+class AddResponse implements ResponseHandler{
 
-    public AddResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse)  {
-        this.servletRequest = servletRequest;
-        this.servletResponse = servletResponse;
-    }
-
-    public void writeToResponseBody(){
+    public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String left = servletRequest.getParameter("left");
         String right = servletRequest.getParameter("right");
         int sum = Integer.parseInt(left) + Integer.parseInt(right);
-        PrintWriter writer = null;
+        PrintWriter writer;
         try {
             writer = servletResponse.getWriter();
         } catch (IOException e) {
@@ -27,5 +20,4 @@ class AddResponse {
         }
         writer.print(String.format("%s + %s = %d", left, right, sum));
     }
-
 }
