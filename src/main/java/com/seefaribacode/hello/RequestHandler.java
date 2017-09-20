@@ -4,11 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 class RequestHandler {
+    private final RouteHandler routeHandler;
+
+    public RequestHandler(RouteHandler routeHandler) {
+        this.routeHandler = routeHandler;
+    }
 
     public void dispatch(HttpServletRequest servletRequest, HttpServletResponse servletResponse)  {
         String uri = servletRequest.getRequestURI();
-        RouteHandler map = new UriHandler();
-        map.route(uri).writeToResponseBody(servletRequest, servletResponse);
+        routeHandler.route(uri).writeToResponseBody(servletRequest, servletResponse);
     }
 
 }

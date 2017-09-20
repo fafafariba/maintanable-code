@@ -8,10 +8,15 @@ import java.io.IOException;
 
 
 public class EntryServlet extends HttpServlet {
+    private EntryInjection entryInjection;
+    @Override
+    public void init() throws ServletException {
+        entryInjection = new EntryInjection();
+    }
+
     @Override
     protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
-        EntryInjection entryInjection = new EntryInjection();
-        EntryInjection.inject(servletRequest, servletResponse);
+        entryInjection.requestHandler.dispatch(servletRequest, servletResponse);
     }
 }
 

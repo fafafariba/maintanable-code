@@ -1,26 +1,23 @@
 package com.seefaribacode.hello;
 
-import javax.servlet.*;
 import javax.servlet.http.*;
-import java.io.*;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
 public class AppTest {
     @Test
-    public void shouldGreetTargetValue() throws ServletException, IOException {
+    public void shouldGreetTargetValue() {
         //given
         String expected = "hello world";
         String targetValue = "world";
         String url = "/hello";
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue);
         HttpServletResponseStub response = new HttpServletResponseStub();
+        RequestHandler requestHandler = newRequestHandler();
 
         //when
-        EntryServlet entryServlet = new EntryServlet();
-        entryServlet.service(request, response);
-
+        requestHandler.dispatch(request, response);
 
         //then
         String actual = response.textDisplayed();
@@ -38,21 +35,10 @@ public class AppTest {
         HttpServletRequest request = new HttpServletRequestAddStub(url, left, right);
         HttpServletResponseStub response = new HttpServletResponseStub();
 
+        RequestHandler requestHandler = newRequestHandler();
 
         //when
-        EntryServlet entryServlet = new EntryServlet();
-
-        try {
-            entryServlet.service(request, response);
-        }
-        catch (IOException E)
-        {
-            System.out.println(E.getMessage());
-        }
-        catch (ServletException E)
-        {
-            System.out.println(E.getMessage());
-        }
+        requestHandler.dispatch(request, response);
 
         //then
         String actual = response.textDisplayed();
@@ -68,21 +54,20 @@ public class AppTest {
         String targetValue = "blah";
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue );
         HttpServletResponseStub response = new HttpServletResponseStub();
-
+        RequestHandler requestHandler = newRequestHandler();
 
         //when
-        EntryServlet entryServlet = new EntryServlet();
-        try {
-            entryServlet.service(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        requestHandler.dispatch(request, response);
 
         //then
         String actual = response.textDisplayed();
         assertEquals("Output should be 'The page you are looking for does not exist (yet).' ", expected, actual);
+    }
+
+    private RequestHandler newRequestHandler(){
+        RouteHandler routeHandler = new UriHandler();
+        RequestHandler requestHandler = new RequestHandler(routeHandler);
+        return requestHandler;
     }
 }
 
