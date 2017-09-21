@@ -10,13 +10,7 @@ class HelloResponse implements ResponseHandler{
 
     public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String name = servletRequest.getParameter("target");
-        PrintWriter writer = null;
-        try {
-            writer = servletResponse.getWriter();
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-
+        PrintWriter writer =  ExceptionHandler.getWriter(servletResponse);
         writer.print(String.format("hello %s", name));
     }
 

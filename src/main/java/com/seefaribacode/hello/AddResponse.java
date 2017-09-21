@@ -12,12 +12,7 @@ class AddResponse implements ResponseHandler{
         String left = servletRequest.getParameter("left");
         String right = servletRequest.getParameter("right");
         int sum = Integer.parseInt(left) + Integer.parseInt(right);
-        PrintWriter writer;
-        try {
-            writer = servletResponse.getWriter();
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        PrintWriter writer = ExceptionHandler.getWriter(servletResponse);
         writer.print(String.format("%s + %s = %d", left, right, sum));
     }
 }
