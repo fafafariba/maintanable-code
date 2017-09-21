@@ -5,9 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 class RequestHandler {
 
-    public void dispatch(HttpServletRequest servletRequest, HttpServletResponse servletResponse)  {
+    public void dispatch(HttpServletRequest servletRequest, HttpServletResponse servletResponse, RouteHandler map)  {
         String uri = servletRequest.getRequestURI();
-        RouteHandler map = new UriHandler();
         map.route(uri).writeToResponseBody(servletRequest, servletResponse);
     }
 

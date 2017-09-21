@@ -18,8 +18,7 @@ public class AppTest {
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         //when
-        EntryServlet entryServlet = new EntryServlet();
-        entryServlet.service(request, response);
+        launchEntryServlet(request, response);
 
 
         //then
@@ -38,21 +37,8 @@ public class AppTest {
         HttpServletRequest request = new HttpServletRequestAddStub(url, left, right);
         HttpServletResponseStub response = new HttpServletResponseStub();
 
-
         //when
-        EntryServlet entryServlet = new EntryServlet();
-
-        try {
-            entryServlet.service(request, response);
-        }
-        catch (IOException E)
-        {
-            System.out.println(E.getMessage());
-        }
-        catch (ServletException E)
-        {
-            System.out.println(E.getMessage());
-        }
+        launchEntryServlet(request, response);
 
         //then
         String actual = response.textDisplayed();
@@ -69,9 +55,24 @@ public class AppTest {
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue );
         HttpServletResponseStub response = new HttpServletResponseStub();
 
-
         //when
+        launchEntryServlet(request, response);
+
+
+        //then
+        String actual = response.textDisplayed();
+        assertEquals("Output should be 'The page you are looking for does not exist (yet).' ", expected, actual);
+    }
+
+    private void launchEntryServlet(HttpServletRequest request, HttpServletResponse response) {
         EntryServlet entryServlet = new EntryServlet();
+
+        try {
+            entryServlet.init();
+        } catch (ServletException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
         try {
             entryServlet.service(request, response);
         } catch (ServletException e) {
@@ -79,13 +80,8 @@ public class AppTest {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-
-        //then
-        String actual = response.textDisplayed();
-        assertEquals("Output should be 'The page you are looking for does not exist (yet).' ", expected, actual);
     }
 }
-
 
 
 

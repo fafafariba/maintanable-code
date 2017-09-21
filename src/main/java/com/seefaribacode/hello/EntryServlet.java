@@ -8,15 +8,17 @@ import java.io.IOException;
 
 
 public class EntryServlet extends HttpServlet {
+    private EntryInjection entryInjection;
+
+
+    @Override
+    public void init() throws ServletException {
+        entryInjection = new EntryInjection();
+    }
+
     @Override
     protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
-        EntryInjection entryInjection = new EntryInjection();
-        EntryInjection.inject(servletRequest, servletResponse);
+        entryInjection.inject(servletRequest, servletResponse);
     }
 }
 
-// Qs
-// 1 Handle exception with throw or try/catch ?
-// 2 Have to invoke EntryServlet.service to start, good thing or bad thing?
-//   (vs. init where just creating a new instance of Entry Servlet would be enough to invoke inject
-//   Or does it not matter?
