@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class RequestHandlerTest {
 
@@ -16,7 +16,7 @@ public class RequestHandlerTest {
         //given
         String uri = "/Bobloblaw";
 
-        HashMap<String, ResponseHandler> responseHandlerMap = new HashMap();
+        HashMap<String, ResponseHandler> responseHandlerMap = new HashMap<String, ResponseHandler>();
         ResponseHandlerStub responseHandler = new ResponseHandlerStub();
         responseHandlerMap.put(uri, responseHandler);
 
@@ -25,37 +25,36 @@ public class RequestHandlerTest {
         HttpServletRequestHandlerStub request = new HttpServletRequestHandlerStub(uri);
         HttpServletResponse response = new HttpServletResponseStub();
 
-        int expectedCount = 1;
-
         //when
         requestHandler.dispatch(request, response);
 
         //then
-        int actualCount = responseHandler.invocations();
-        assertEquals("writeResponseToBody should be invoked", expectedCount, actualCount);
+        assertThat("writeResponseToBody should be passed request parameter", request, is(responseHandler.requestParam));
+        assertThat("writeResponseToBody should be passed response parameter", response, is(responseHandler.responseParam));
 
     }
 
     class ResponseHandlerStub implements ResponseHandler {
-        int count = 0;
+        HttpServletRequest requestParam;
+        HttpServletResponse responseParam;
+
 
         public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
-            count++;
+            this.requestParam = servletRequest;
+            this.responseParam = servletResponse;
         }
 
-        public int invocations(){
-            return count;
-        }
+
     }
 
     class UriHandlerStub implements RouteHandler {
         HashMap<String, ResponseHandler> routeMap;
 
-        public UriHandlerStub(HashMap routeMap) {
-        this.routeMap = routeMap;
+        UriHandlerStub(HashMap routeMap) {
+            this.routeMap = routeMap;
         }
 
-        public ResponseHandler route(String uri) {
+         public ResponseHandler route(String uri) {
 
             if (routeMap.containsKey(uri)) {
                 return routeMap.get(uri);

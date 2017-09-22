@@ -11,9 +11,4 @@ class HttpServletRequestHandlerStub extends HttpServletRequestNotImplemented {
     public String getRequestURI() {
         return uri;
     }
-
-    @Override
-    public String getParameter(String key) {
-        return null;
-    }
 }
