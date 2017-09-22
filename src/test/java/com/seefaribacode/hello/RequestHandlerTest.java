@@ -29,13 +29,10 @@ public class RequestHandlerTest {
 
         //when
         requestHandler.dispatch(request, response);
-        requestHandler.dispatch(request, response);
 
         //then
         int actualCount = responseHandler.invocations();
-        assertEquals("RequestHandler should be instantiated", expectedCount, actualCount);
-//        assertEquals("RequestHandler should dispatch request", expectedCount, actualCount);
-//        assertEquals("RequestHandler should dispatch response", expectedCount, actualCount);
+        assertEquals("writeResponseToBody should be invoked", expectedCount, actualCount);
 
     }
 
