@@ -18,7 +18,7 @@ public class EntryServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
-        entryInjection.inject(servletRequest, servletResponse);
+        entryInjection.requestHandler.dispatch(servletRequest, servletResponse);
     }
 }
 

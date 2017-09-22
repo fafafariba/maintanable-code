@@ -11,14 +11,14 @@ public class AppTest {
     @Test
     public void shouldGreetTargetValue() throws ServletException, IOException {
         //given
-        String expected = "hello world";
-        String targetValue = "world";
+        String expected = "hello BobLoblaw";
+        String targetValue = "BobLoblaw";
         String url = "/hello";
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue);
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         //when
-        launchEntryServlet(request, response);
+        launchServlet(request, response);
 
 
         //then
@@ -38,7 +38,7 @@ public class AppTest {
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         //when
-        launchEntryServlet(request, response);
+        launchServlet(request, response);
 
         //then
         String actual = response.textDisplayed();
@@ -50,13 +50,13 @@ public class AppTest {
 
         //given
         String expected = "The page you are looking for does not exist (yet).";
-        String url = "/nothelloradd";
-        String targetValue = "blah";
+        String url = "/notHellOrAdd";
+        String targetValue = "BobLoblaw";
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue );
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         //when
-        launchEntryServlet(request, response);
+        launchServlet(request, response);
 
 
         //then
@@ -64,22 +64,29 @@ public class AppTest {
         assertEquals("Output should be 'The page you are looking for does not exist (yet).' ", expected, actual);
     }
 
-    private void launchEntryServlet(HttpServletRequest request, HttpServletResponse response) {
-        EntryServlet entryServlet = new EntryServlet();
+    private void launchServlet(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
-            entryServlet.init();
-        } catch (ServletException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        RequestHandler requestHandler = new RequestHandler(new UriHandler());
+        requestHandler.dispatch(request, response);
 
-        try {
-            entryServlet.service(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+
+
+
+//        EntryServlet entryServlet = new EntryServlet();
+//
+//        try {
+//            entryServlet.init();
+//        } catch (ServletException e) {
+//            throw new RuntimeException(e.getMessage(), e);
+//        }
+//
+//        try {
+//            entryServlet.service(request, response);
+//        } catch (ServletException e) {
+//            throw new RuntimeException(e.getMessage(), e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e.getMessage(), e);
+//        }
     }
 }
 
