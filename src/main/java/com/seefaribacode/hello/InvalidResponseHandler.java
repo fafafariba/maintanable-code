@@ -9,7 +9,8 @@ class InvalidResponseHandler implements ResponseHandler{
 
     public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse){
         PrintWriter writer = ExceptionHandler.getWriter(servletResponse);
-        writer.print("The page you are looking for does not exist (yet).");
+        String uri = servletRequest.getRequestURI();
+        writer.print(String.format("The page %s does not exist", uri));
     }
 
 }

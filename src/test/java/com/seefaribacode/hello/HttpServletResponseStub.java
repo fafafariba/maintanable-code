@@ -1,5 +1,6 @@
 package com.seefaribacode.hello;
 
+import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -15,4 +16,5 @@ class HttpServletResponseStub extends HttpServletResponseNotImplemented {
     public PrintWriter getWriter() throws IOException {
         return new PrintWriter(writer);
     }
+
 }
