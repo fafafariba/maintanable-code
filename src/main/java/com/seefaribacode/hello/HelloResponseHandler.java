@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class HelloResponse implements ResponseHandler{
+class HelloResponseHandler implements ResponseHandler{
 
     public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String name = servletRequest.getParameter("target");

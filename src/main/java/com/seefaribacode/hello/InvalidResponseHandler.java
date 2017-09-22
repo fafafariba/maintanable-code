@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class InvalidResponse implements ResponseHandler{
+class InvalidResponseHandler implements ResponseHandler{
 
     public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse){
         PrintWriter writer = ExceptionHandler.getWriter(servletResponse);
@@ -13,5 +13,3 @@ class InvalidResponse implements ResponseHandler{
     }
 
 }
-
-// Is it ok that writeToResponseBody takes servletRequest as a param even though it doesn't use it?

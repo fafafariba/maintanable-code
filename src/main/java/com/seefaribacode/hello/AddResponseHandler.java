@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-class AddResponse implements ResponseHandler{
+class AddResponseHandler implements ResponseHandler{
 
     public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
         String left = servletRequest.getParameter("left");

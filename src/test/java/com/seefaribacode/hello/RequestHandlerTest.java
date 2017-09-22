@@ -48,19 +48,6 @@ public class RequestHandlerTest {
         }
     }
 
-    class HttpServletRequestHandlerStub extends HttpServletRequestNotImplemented {
-        String uri;
-
-        public HttpServletRequestHandlerStub(String uri) {
-            this.uri = uri;
-        }
-
-        @Override
-        public String getRequestURI() {
-            return uri;
-        }
-    }
-
     class UriHandlerStub implements RouteHandler {
         HashMap<String, ResponseHandler> routeMap;
 
