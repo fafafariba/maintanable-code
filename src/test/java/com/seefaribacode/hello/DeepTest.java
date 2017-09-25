@@ -3,6 +3,8 @@ package com.seefaribacode.hello;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
+import java.util.HashMap;
+
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -19,7 +21,7 @@ public class DeepTest {
 
         //when
         launchServlet(request, response);
-        
+
         //then
         String actual = response.textDisplayed();
         assertEquals(String.format("Output should be hello %s ", targetValue), expected, actual) ;
@@ -65,7 +67,9 @@ public class DeepTest {
 
     private void launchServlet(HttpServletRequest request, HttpServletResponse response) {
 
-        RequestHandler requestHandler = new RequestHandler(new UriHandler());
+        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
+        RouteHandler routeHandler = new UriHandler(routeMap);
+        RequestHandler requestHandler = new RequestHandler(routeHandler);
         requestHandler.dispatch(request, response);
     }
 }

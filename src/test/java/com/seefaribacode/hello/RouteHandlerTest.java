@@ -2,6 +2,8 @@ package com.seefaribacode.hello;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -11,7 +13,8 @@ public class RouteHandlerTest {
         //given
         String uri = "/hello";
         String expected = HelloResponseHandler.class.getSimpleName();
-        RouteHandler routeHandler = new UriHandler();
+        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
+        RouteHandler routeHandler = new UriHandler(routeMap);
 
         //when
         ResponseHandler responseHandler = routeHandler.route(uri);
@@ -26,7 +29,8 @@ public class RouteHandlerTest {
         //given
         String uri = "/add";
         String expected = AddResponseHandler.class.getSimpleName();
-        RouteHandler routeHandler = new UriHandler();
+        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
+        RouteHandler routeHandler = new UriHandler(routeMap);
 
         //when
         ResponseHandler responseHandler = routeHandler.route(uri);
@@ -41,7 +45,8 @@ public class RouteHandlerTest {
         //given
         String uri = "/oshkoshbigosh";
         String expected = InvalidResponseHandler.class.getSimpleName();
-        RouteHandler routeHandler = new UriHandler();
+        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
+        RouteHandler routeHandler = new UriHandler(routeMap);
 
         //when
         ResponseHandler responseHandler = routeHandler.route(uri);
