@@ -4,7 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 class EntryInjection {
-    final RequestHandler requestHandler = new RequestHandler(new UriHandler());
+    final RouteHandler routeHandler = new UriHandler();
+    final RequestHandler requestHandler = new RequestHandler(routeHandler);
 
     public void inject(HttpServletRequest servletRequest, HttpServletResponse servletResponse)  {
         requestHandler.dispatch(servletRequest, servletResponse);

@@ -7,23 +7,22 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 
-public class AppTest {
+public class DeepTest {
     @Test
     public void shouldGreetTargetValue() throws ServletException, IOException {
         //given
-        String expected = "hello BobLoblaw";
         String targetValue = "BobLoblaw";
+        String expected = String.format("hello %s", targetValue);
         String url = "/hello";
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue);
         HttpServletResponseStub response = new HttpServletResponseStub();
 
         //when
         launchServlet(request, response);
-
-
+        
         //then
         String actual = response.textDisplayed();
-        assertEquals("Output should be hello world ", expected, actual);
+        assertEquals(String.format("Output should be hello %s ", targetValue), expected, actual) ;
     }
 
     @Test
@@ -49,8 +48,8 @@ public class AppTest {
     public void shouldShowInvalidPage() {
 
         //given
-        String expected = "The page you are looking for does not exist (yet).";
         String url = "/notHellOrAdd";
+        String expected = String.format("The page %s does not exist", url);
         String targetValue = "BobLoblaw";
         HttpServletRequest request = new HttpServletRequestTargetStub(url, targetValue );
         HttpServletResponseStub response = new HttpServletResponseStub();
@@ -61,32 +60,13 @@ public class AppTest {
 
         //then
         String actual = response.textDisplayed();
-        assertEquals("Output should be 'The page you are looking for does not exist (yet).' ", expected, actual);
+        assertEquals(String.format("Output should be 'The page %s does not exist.' ", url), expected, actual);
     }
 
     private void launchServlet(HttpServletRequest request, HttpServletResponse response) {
 
         RequestHandler requestHandler = new RequestHandler(new UriHandler());
         requestHandler.dispatch(request, response);
-
-
-
-
-//        EntryServlet entryServlet = new EntryServlet();
-//
-//        try {
-//            entryServlet.init();
-//        } catch (ServletException e) {
-//            throw new RuntimeException(e.getMessage(), e);
-//        }
-//
-//        try {
-//            entryServlet.service(request, response);
-//        } catch (ServletException e) {
-//            throw new RuntimeException(e.getMessage(), e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e.getMessage(), e);
-//        }
     }
 }
 

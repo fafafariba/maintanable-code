@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 class RequestHandler {
-    RouteHandler routeHandler;
+    private final RouteHandler routeHandler;
 
     public RequestHandler(RouteHandler routeHandler) {
         this.routeHandler = routeHandler;

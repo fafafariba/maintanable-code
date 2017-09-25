@@ -2,7 +2,6 @@ package com.seefaribacode.hello;
 
 import org.junit.Test;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
@@ -29,40 +28,12 @@ public class RequestHandlerTest {
         requestHandler.dispatch(request, response);
 
         //then
-        assertThat("writeResponseToBody should be passed request parameter", request, is(responseHandler.requestParam));
-        assertThat("writeResponseToBody should be passed response parameter", response, is(responseHandler.responseParam));
+        assertThat("exactly one invocation", responseHandler.invocations.size(), is(1));
+        RequestAndResponse requestAndResponse = responseHandler.invocations.get(0);
+        assertThat("writeResponseToBody should be passed request parameter", request, is(requestAndResponse.requestParam));
+        assertThat("writeResponseToBody should be passed response parameter", response, is(requestAndResponse.responseParam));
 
     }
 
-    class ResponseHandlerStub implements ResponseHandler {
-        HttpServletRequest requestParam;
-        HttpServletResponse responseParam;
-
-
-        public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
-            this.requestParam = servletRequest;
-            this.responseParam = servletResponse;
-        }
-
-
-    }
-
-    class UriHandlerStub implements RouteHandler {
-        HashMap<String, ResponseHandler> routeMap;
-
-        UriHandlerStub(HashMap routeMap) {
-            this.routeMap = routeMap;
-        }
-
-         public ResponseHandler route(String uri) {
-
-            if (routeMap.containsKey(uri)) {
-                return routeMap.get(uri);
-
-            } else {
-                return null;
-            }
-        }
-    }
 }
 

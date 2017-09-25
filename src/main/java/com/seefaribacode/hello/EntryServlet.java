@@ -6,10 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 public class EntryServlet extends HttpServlet {
     private EntryInjection entryInjection;
-
 
     @Override
     public void init() throws ServletException {
