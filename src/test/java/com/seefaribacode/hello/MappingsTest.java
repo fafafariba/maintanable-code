@@ -45,6 +45,21 @@ public class MappingsTest {
         ResponseHandler responseHandler = Mappings.ROUTE_MAP.get(uri);
 
         //then
-        assertTrue(responseHandler == null );
+        assertTrue("Returns null", responseHandler == null );
+    }
+
+    @Test
+    public void shouldBeCorrectSize(){
+        //given
+        int expected = 2;
+
+        //when
+        int actual = Mappings.ROUTE_MAP.size();
+
+        //then
+        assertTrue("Map is correct size", expected == actual);
     }
 }
+
+// The last test seems overkill but its failure could indicated that a route was added/deleted without updating tests
+// However that would mean this test has to be updated each time a new route was added/deleted, could be an annoyance
