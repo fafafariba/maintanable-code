@@ -28,3 +28,7 @@ public class Mappings {
 
 // In actual code, would you have array of [uri, responseHandler] pairs in a separate file
 // Then here iterate through array and add to Hashmap
+
+// Best place to invoke Mappings.ROUTE_MAP?
+
+// Test: does "/hello" return

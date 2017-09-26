@@ -14,4 +14,7 @@ class EntryInjection {
     }
 }
 
-// REquestHandler public or private?
+// Entry Injection really only needs to know about Request Handler...
+// Could you move routeMap to constructor of UriHandler or create getMap method in RouteHandler interface?
+// ^ Same thing for RequestHandler constructor invoking UriHandler
+
