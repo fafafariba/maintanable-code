@@ -1,6 +1,6 @@
 # Maintable Code: Hello Web Exercise #
 
-Take 2
+First attempt at completing CJ Engineering onboarding's Hello Web exercise using TDD and maintainable code principles.
 
 ## Deployment Instructions
 
@@ -11,3 +11,5 @@ Take 2
 4. Navigate to
     - [http://localhost:8080/hello?target=world](http://localhost:8080/hello?target=alice)
     - [http://localhost:8080/add?left=2&right=3](http://localhost:8080/add?left=2&right=3)
+    
+Alternatively, run shell script `./run.sh`
