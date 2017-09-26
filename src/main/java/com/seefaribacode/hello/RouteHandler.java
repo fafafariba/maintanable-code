@@ -2,5 +2,5 @@ package com.seefaribacode.hello;
 
 
 public interface RouteHandler {
-    ResponseHandler route(String uri);
+    ResponseHandler getResponseHandler(String uri);
 }

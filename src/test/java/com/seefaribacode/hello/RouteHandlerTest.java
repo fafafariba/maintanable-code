@@ -2,22 +2,27 @@ package com.seefaribacode.hello;
 
 import org.junit.Test;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class RouteHandlerTest {
     @Test
-    public void shouldCallHelloResponseHandler() {
+    public void invokeMatchingHandler() {
         //given
-        String uri = "/hello";
-        String expected = HelloResponseHandler.class.getSimpleName();
-        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
-        RouteHandler routeHandler = new UriHandler(routeMap);
+        String uri = "/expected-path";
+        ResponseHandler expectedHandler = new ExpectedHandler();
+        ResponseHandler defaultHandler = new DefaultHandler();
+        String expected = expectedHandler.getClass().getSimpleName();
+        Mapping mappings = new MappingsStub(uri, expectedHandler);
+        RouteHandler routeHandler = new UriHandler(mappings, defaultHandler);
 
         //when
-        ResponseHandler responseHandler = routeHandler.route(uri);
+        ResponseHandler responseHandler = routeHandler.getResponseHandler(uri);
 
         //then
         String actual = responseHandler.getClass().getSimpleName();
@@ -25,36 +30,46 @@ public class RouteHandlerTest {
     }
 
     @Test
-    public void shouldCallAddResponseHandler() {
+    public void invokeDefaultHandlerIfNoMatchingHandlerFound() {
         //given
-        String uri = "/add";
-        String expected = AddResponseHandler.class.getSimpleName();
-        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
-        RouteHandler routeHandler = new UriHandler(routeMap);
+        String uri = "/unexpected-path";
+        ResponseHandler expectedHandler = new ExpectedHandler();
+        ResponseHandler defaultHandler = new DefaultHandler();
+        String expected = defaultHandler.getClass().getSimpleName();
+        Mapping mappings = new MappingsStub("/expected-path", expectedHandler);
+        RouteHandler routeHandler = new UriHandler(mappings, defaultHandler);
 
         //when
-        ResponseHandler responseHandler = routeHandler.route(uri);
+        ResponseHandler responseHandler = routeHandler.getResponseHandler(uri);
 
         //then
         String actual = responseHandler.getClass().getSimpleName();
         assertThat("URI calls correct handler", expected, is(actual));
     }
 
-    @Test
-    public void shouldCallInvalidResponseHandler() {
-        //given
-        String uri = "/oshkoshbigosh";
-        String expected = InvalidResponseHandler.class.getSimpleName();
-        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
-        RouteHandler routeHandler = new UriHandler(routeMap);
+    class MappingsStub implements Mapping {
+        final Map<String, ResponseHandler> routeMap;
 
-        //when
-        ResponseHandler responseHandler = routeHandler.route(uri);
+        public MappingsStub(String uri, ResponseHandler responseHandler) {
+            routeMap = new HashMap<>();
+            routeMap.put(uri, responseHandler);
+        }
 
-        //then
-        String actual = responseHandler.getClass().getSimpleName();
-        assertThat("URI calls correct handler", expected, is(actual));
+        public ResponseHandler getRoute(String uri) {
+            return routeMap.get(uri);
+        }
     }
 
-
+    class ExpectedHandler implements ResponseHandler{
+        @Override
+        public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+            throw new UnsupportedOperationException("Not Implemented!");
+        }
+    }
+    class DefaultHandler implements ResponseHandler{
+        @Override
+        public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+            throw new UnsupportedOperationException("Not Implemented!");
+        }
+    }
 }

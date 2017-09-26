@@ -13,5 +13,3 @@ public class ExceptionHandler {
         }
     }
 }
-
-// Why can't handledResponse be final? And why no public?

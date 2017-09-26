@@ -1,17 +1,20 @@
 package com.seefaribacode.hello;
 
-import java.util.HashMap;
-
 public class UriHandler implements RouteHandler {
-    private final HashMap<String, ResponseHandler> routeMap;
+    private final Mapping map;
     private final ResponseHandler invalidResponseHandler;
 
-    public UriHandler(HashMap<String, ResponseHandler> routeMap) {
-        this.routeMap = routeMap;
-        this.invalidResponseHandler = new InvalidResponseHandler();
+    public UriHandler(Mapping map, ResponseHandler invalidResponseHandler) {
+        this.map = map;
+        this.invalidResponseHandler = invalidResponseHandler;
     }
 
-    public ResponseHandler route(String uri) {
-        return routeMap.getOrDefault(uri, invalidResponseHandler);
+    public ResponseHandler getResponseHandler(String uri) {
+        ResponseHandler responseHandler = map.getRoute(uri);
+        if (responseHandler != null) {
+            return responseHandler;
+        } else {
+            return invalidResponseHandler;
+        }
     }
 }

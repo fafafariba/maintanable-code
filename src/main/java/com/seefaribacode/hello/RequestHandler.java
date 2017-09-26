@@ -12,7 +12,7 @@ class RequestHandler {
 
     public void dispatch(HttpServletRequest servletRequest, HttpServletResponse servletResponse)  {
         String uri = servletRequest.getRequestURI();
-        routeHandler.route(uri).writeToResponseBody(servletRequest, servletResponse);
+        routeHandler.getResponseHandler(uri).writeToResponseBody(servletRequest, servletResponse);
     }
 
 }

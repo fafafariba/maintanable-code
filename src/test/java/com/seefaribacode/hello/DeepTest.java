@@ -5,6 +5,7 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.util.HashMap;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
@@ -67,8 +68,9 @@ public class DeepTest {
 
     private void launchServlet(HttpServletRequest request, HttpServletResponse response) {
 
-        HashMap<String, ResponseHandler> routeMap = Mappings.ROUTE_MAP;
-        RouteHandler routeHandler = new UriHandler(routeMap);
+        Mapping map = new AppMap();
+        ResponseHandler noRouteResponseHandler = new InvalidResponseHandler();
+        RouteHandler routeHandler = new UriHandler(map, noRouteResponseHandler);
         RequestHandler requestHandler = new RequestHandler(routeHandler);
         requestHandler.dispatch(request, response);
     }

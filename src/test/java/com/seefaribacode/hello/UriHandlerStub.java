@@ -9,7 +9,7 @@ class UriHandlerStub implements RouteHandler {
         this.routeMap = routeMap;
     }
 
-     public ResponseHandler route(String uri) {
+     public ResponseHandler getResponseHandler(String uri) {
 
         if (routeMap.containsKey(uri)) {
             return routeMap.get(uri);
