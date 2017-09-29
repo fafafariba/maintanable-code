@@ -5,6 +5,10 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
     <display-name>Hello Web Application</display-name>
+    <servlet>
+        <servlet-name>entryServlet</servlet-name>
+        <servlet-class>com.seefaribacode.onboarding.EntryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>entryServlet</servlet-name>
         <url-pattern>/*</url-pattern>
