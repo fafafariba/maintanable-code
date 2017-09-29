@@ -1,0 +1,7 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.seefaribacode.onboarding.maintainable-code</groupId>
+    <artifactId>hello</artifactId>
+    <version>1.3.0</version>
+    <packaging>war</packaging>
+</project>
