@@ -10,12 +10,14 @@ class DependencyInjection {
         this.reqHandler = new RequestHandler();
 
     }
+}
+
+class RequestHandler {
+    static UriMapping routeMap = new RouteMap();
 
     public void dispatch(HttpServletRequest req, HttpServletResponse res) {
 
     }
-}
-
-class RequestHandler {
 
 }
+
