@@ -1,22 +1,14 @@
 package com.seefaribacode.onboarding;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 class DependencyInjection {
-    public RequestHandler reqHandler;
+    RequestHandler reqHandler;
+    UriMapping routeMap;
+    UriRouteHandler routeHandler;
 
     public DependencyInjection() {
-        this.reqHandler = new RequestHandler();
-
-    }
-}
-
-class RequestHandler {
-    static UriMapping routeMap = new RouteMap();
-
-    public void dispatch(HttpServletRequest req, HttpServletResponse res) {
-
+        this.routeMap = new RouteMap();
+        this.routeHandler = new RouteHandler();
+        this.reqHandler = new RequestHandler(routeMap, routeHandler);
     }
 
 }

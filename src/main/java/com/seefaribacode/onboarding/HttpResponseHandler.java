@@ -1,5 +1,8 @@
 package com.seefaribacode.onboarding;
 
-public interface HttpResponseHandler {
 
+import javax.servlet.http.HttpServletResponse;
+
+public interface HttpResponseHandler {
+    void writeToBody(HttpServletResponse res);
 }

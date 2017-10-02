@@ -1,4 +1,15 @@
 package com.seefaribacode.onboarding;
 
-public class RouteMap implements UriMapping {
+import java.util.HashMap;
+
+class RouteMap implements UriMapping {
+    HashMap routeMap;
+    public RouteMap() {
+        this.routeMap = new HashMap<String, HttpResponseHandler>();
+    }
+
+    @Override
+    public HttpResponseHandler getResponseHandler(String uri) {
+        return null;
+    }
 }

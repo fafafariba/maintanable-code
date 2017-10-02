@@ -12,6 +12,43 @@ import static org.junit.Assert.assertEquals;
 
 public class DependencyInjectionTest {
     static EntryServlet entryServlet = new EntryServlet();
+
+    @Test
+    public void shouldInstantiateRouteMap(){
+        //given
+        try {
+            entryServlet.init();
+        } catch (ServletException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
+        //when
+        DependencyInjection dep = entryServlet.dependencyInjection;
+        String actual = dep.routeHandler.getClass().getSimpleName();
+
+        //then
+        assertEquals("Instance of RouteHandler is created", "RouteHandler" , actual);
+
+    }
+
+    @Test
+    public void shouldInstantiateRouteHandler(){
+        //given
+        try {
+            entryServlet.init();
+        } catch (ServletException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+
+        //when
+        DependencyInjection dep = entryServlet.dependencyInjection;
+        String actual = dep.routeMap.getClass().getSimpleName();
+
+        //then
+        assertEquals("Instance of RouteMap is created", "RouteMap" , actual);
+
+    }
+
     @Test
     public void shouldInstantiateRequestHandler(){
         //given
@@ -41,7 +78,9 @@ public class DependencyInjectionTest {
         }
         HttpServletRequest req = new HttpServletRequestStub("/test");
         HttpServletResponse res = new HttpServletResponseStub();
-        RequestHandlerStub reqHandler = new RequestHandlerStub();
+        UriRouteHandler routeHandler = new RouteHandlerStub();
+        UriMapping routeMap = new RouteMapStub();
+        RequestHandlerStub reqHandler = new RequestHandlerStub(routeMap, routeHandler);
         entryServlet.dependencyInjection.reqHandler = reqHandler;
 
         //when
@@ -64,42 +103,4 @@ public class DependencyInjectionTest {
 
 }
 
-class HttpServletRequestStub extends NotImplementedHttpServletRequest {
-    private String uri;
 
-    public HttpServletRequestStub(String uri) {
-        this.uri = uri;
-    }
-
-    @Override
-    public String getRequestURI() {
-        return uri;
-    }
-}
-
-class RequestHandlerStub extends RequestHandler {
-    HttpServletRequest req;
-    HttpServletResponse res;
-    int reqCount;
-    int resCount;
-
-
-    public RequestHandlerStub() {
-        this.reqCount = 0;
-        this.resCount = 0;
-
-    }
-
-    @Override
-    public void dispatch(HttpServletRequest req, HttpServletResponse res) {
-        reqCount++;
-        resCount++;
-        this.req = req;
-        this.res = res;
-
-    }
-}
-
-class HttpServletResponseStub extends NotImplementedHttpServletResponse {
-
-}
