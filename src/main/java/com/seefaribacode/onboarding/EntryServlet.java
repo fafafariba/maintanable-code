@@ -7,10 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class EntryServlet extends HttpServlet {
+    private static DependencyInjection dependencyInjection;
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.service(req, resp);
+    public void init() throws ServletException {
+        DependencyInjection dependencyInjection = new DependencyInjection();
+    }
+
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        dependencyInjection.dispatch(req, res);
     }
 
 }
