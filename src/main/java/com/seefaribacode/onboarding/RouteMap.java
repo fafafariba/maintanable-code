@@ -1,15 +1,16 @@
 package com.seefaribacode.onboarding;
 
-import java.util.HashMap;
-
 class RouteMap implements UriMapping {
-    HashMap routeMap;
-    public RouteMap() {
-        this.routeMap = new HashMap<String, HttpResponseHandler>();
-    }
 
     @Override
     public HttpResponseHandler getResponseHandler(String uri) {
-        return null;
+        switch(uri) {
+            case "/hello":
+                return new HelloResponseHandler();
+            case "/add":
+                return new AddResponseHandler();
+            default:
+                return new NotFoundResponseHandler();
+        }
     }
 }
