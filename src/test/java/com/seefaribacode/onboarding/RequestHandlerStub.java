@@ -8,16 +8,14 @@ class RequestHandlerStub extends RequestHandler {
     UriRouteHandler routeHandler;
     HttpServletRequest req;
     HttpServletResponse res;
-    int reqCount;
-    int resCount;
+    static int reqCount = 0;
+    static int resCount = 0;
 
 
     public RequestHandlerStub(UriMapping routeMap, UriRouteHandler routeHandler) {
         super(routeMap, routeHandler);
         this.req = null;
         this.res = null;
-        this.reqCount = 0;
-        this.resCount = 0;
     }
 
 

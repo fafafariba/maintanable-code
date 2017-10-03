@@ -4,47 +4,49 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
 public class RequestHandlerTest {
 
+
     @Test
     public void shouldInvokeGetRouteWhenDispatchCalled(){
         //given
         RouteMapStub routeMapStub = new RouteMapStub();
+        HttpServletRequestStub reqStub = new HttpServletRequestStub("/route-handler-test");
+        HttpServletResponse resStub = new HttpServletResponseStub();
+        ResponseHandlerStub responseHandlerStub = new ResponseHandlerStub();
         RouteHandlerStub routeHandlerStub = new RouteHandlerStub();
-        RequestHandler reqHandler = new RequestHandler(routeMapStub, routeHandlerStub);
-        HttpServletRequestStub req = new HttpServletRequestStub("\route-handler-test");
-        HttpServletResponse res = new HttpServletResponseStub();
+        RequestHandler reqHandler = new RequestHandler(routeMapStub, new RouteHandlerStub());
 
         //when
-        reqHandler.dispatch(req, res);
+        reqHandler.dispatch(reqStub, resStub);
 
         //then
         assertEquals("Invokes getRoute once", 1, routeHandlerStub.invokeCount);
         assertEquals("Uri matches", "/route-handler-test", routeHandlerStub.uri);
-        assertEquals("RouteMap matches", reqHandler.routeMap, routeHandler.routeMap);
-
+        assertEquals("RouteMap matches", reqHandler.routeMap, routeHandlerStub.routeMap);
     }
 
-    @Ignore
+    @Test
     public void shouldInvokeWriteToBody(){
+        //given
+        RouteMapStub routeMapStub = new RouteMapStub();
+        RouteHandlerStub routeHandlerStub = new RouteHandlerStub();
+        RequestHandler reqHandler = new RequestHandler(routeMapStub, routeHandlerStub);
+        HttpServletRequestStub reqStub = new HttpServletRequestStub("/route-handler-test");
+        HttpServletResponse resStub = new HttpServletResponseStub();
+        ResponseHandlerStub responseHandlerStub = new ResponseHandlerStub();
+
+        //when
+        reqHandler.dispatch(reqStub, resStub);
+
+        //then
+        assertEquals("Invokes writeToBody once",1, responseHandlerStub.invokeCount);
+        assertEquals("Response matches", resStub, responseHandlerStub.res);
 
     }
 }
 
-class RouteHandlerStub implements UriRouteHandler {
-    static int invokeCount = 0;
-    String uri;
-    UriMapping routeMap;
-
-    @Override
-    public HttpResponseHandler getRoute(String uri, UriMapping routeMap) {
-        invokeCount++;
-        this.uri = uri;
-        this.routeMap = routeMap;
-        return null;
-    }
-}
+// Refactor given variables?
