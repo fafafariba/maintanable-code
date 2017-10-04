@@ -28,9 +28,27 @@ public class ResponseHandlerTest {
     public void shouldWriteAddResponse(){
         //given
         String expectedBody = "<h1>ADD</h1>\n" +
-                "<p>300 + 700 = 1000</p>\n";
+                "<p>3 + 7 = 10</p>\n";
         HttpResponseHandler addResponseHandler = new AddResponseHandler();
-        HttpServletAddRequestStub reqStub = new HttpServletAddRequestStub("300", "700");
+        HttpServletAddRequestStub reqStub = new HttpServletAddRequestStub("3", "7");
+        HttpServletResponseStub resStub = new HttpServletResponseStub();
+
+        //when
+        addResponseHandler.writeToBody(reqStub, resStub);
+
+        //then
+        assertEquals("Output matches add response", expectedBody, resStub.getBody());
+
+
+    }
+
+    @Test
+    public void shouldWriteGenericErrorResponseWhenAddResponseThrowsException(){
+        //given
+        String expectedBody = "<h1>ADD ERROR</h1>\n" +
+                "<p>Check the logs</p>\n";
+        HttpResponseHandler addResponseHandler = new AddResponseHandler();
+        HttpServletAddRequestStub reqStub = new HttpServletAddRequestStub("3000000000", "7000000000");
         HttpServletResponseStub resStub = new HttpServletResponseStub();
 
         //when
@@ -58,42 +76,3 @@ public class ResponseHandlerTest {
     }
 }
 
-class HttpServletAddRequestStub extends NotImplementedHttpServletRequest {
-    private final String left;
-    private final String right;
-
-    public HttpServletAddRequestStub(String left, String right) {
-        this.left = left;
-        this.right = right;
-    }
-
-    @Override
-    public String getParameter(String s) {
-        switch(s){
-            case "left":
-                return left;
-            case "right":
-                return right;
-            default:
-                return null;
-        }
-    }
-}
-
-class HttpServletHelloRequestStub extends NotImplementedHttpServletRequest {
-    private final String targetValue;
-
-    public HttpServletHelloRequestStub(String targetValue) {
-        this.targetValue = targetValue;
-    }
-
-    @Override
-    public String getParameter(String s) {
-        switch(s){
-            case "target":
-                return targetValue;
-            default:
-                return null;
-        }
-    }
-}

@@ -11,14 +11,20 @@ public class AddResponseHandler implements HttpResponseHandler {
     public void writeToBody(HttpServletRequest req, HttpServletResponse res) {
         String leftNum = req.getParameter("left");
         String rightNum = req.getParameter("right");
-        String sumString = String.format("<p>%s + %s = %d</p>", leftNum, rightNum, Integer.parseInt(leftNum) + Integer.parseInt(rightNum));
-
-        res.setContentType("text/html");
 
         PrintWriter output = Exception.handleWriter(res);
+        res.setContentType("text/html");
+        String sumString = null;
+        try {
+            sumString = String.format("<p>%s + %s = %d</p>", leftNum, rightNum, Integer.parseInt(leftNum) + Integer.parseInt(rightNum));
+            output.println("<h1>ADD</h1>");
+            output.println(sumString);
+        } catch(NumberFormatException e) {
+            output.println("<h1>ADD ERROR</h1>");
+            output.println("<p>Check the logs</p>");
+            System.out.println(e);
+        }
 
-        output.println("<h1>ADD</h1>");
-        output.println(sumString);
     }
 
 

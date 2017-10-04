@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class Exception {
+class Exception extends Throwable {
     static PrintWriter handleWriter(HttpServletResponse res) {
         try {
             return res.getWriter();
