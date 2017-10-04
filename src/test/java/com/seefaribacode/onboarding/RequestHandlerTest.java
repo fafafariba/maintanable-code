@@ -44,9 +44,11 @@ public class RequestHandlerTest {
 
         //then
         assertEquals("Invokes writeToBody once",1, responseHandlerStub.invokeCount);
+        assertEquals("Response matches", reqStub, responseHandlerStub.req);
         assertEquals("Response matches", resStub, responseHandlerStub.res);
 
     }
 }
 
 // Refactor given variables?
+// Significance of counting invocations?

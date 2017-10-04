@@ -15,7 +15,7 @@ class RequestHandler {
     public void dispatch(HttpServletRequest req, HttpServletResponse res) {
         String uri = req.getRequestURI();
         HttpResponseHandler responseHandler = routeHandler.getRoute(uri, routeMap);
-        responseHandler.writeToBody(res);
+        responseHandler.writeToBody(req, res);
     }
 
 }

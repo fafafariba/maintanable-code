@@ -1,5 +1,6 @@
 package com.seefaribacode.onboarding;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import javax.servlet.ServletException;
