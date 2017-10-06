@@ -9,4 +9,8 @@ Take 4 (with emphasis on TDD and Top Down Design)
 2. Package Maven
     - `mvn package`
 3. Launch server
-    - `java -jar jetty-runner.jar target/maintainable-code-1.4.war` 
+    - `java -jar jetty-runner.jar target/maintainable-code-1.4.war`
+
+4. Navigate to urls
+    - [hello](localhost:8080/hello?target=world)
+    - [add](localhost:8080/add?left=5&right=10)
