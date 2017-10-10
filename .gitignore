@@ -1,4 +1,2 @@
-.idea
-*.iml
-jetty-runner.jar
-target
+.idea/
+.DS_Store
