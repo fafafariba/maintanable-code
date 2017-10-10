@@ -1,4 +1,4 @@
-package com.seefaribacode.onboarding;
+package com.seefaribacode.onboarding.stubs;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,7 +11,7 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
-class HttpServletRequestNotImplemented implements HttpServletRequest {
+public class NotImplementedHttpServletRequest implements HttpServletRequest {
     public String getAuthType() {
         throw new UnsupportedOperationException("Not Implemented!");
     }

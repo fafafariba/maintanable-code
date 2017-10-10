@@ -1,6 +1,8 @@
 package com.seefaribacode.onboarding;
 
 public class DependencyInjection {
-    RequestHandler appRequestHandler = new AppRequestHandler();
+    Router appRouter = new AppRouter();
+    ResponseWriter errorResponseWriter = new ErrorResponseWriter();
+    RequestHandler appRequestHandler = new AppRequestHandler(appRouter, errorResponseWriter);
 }
 

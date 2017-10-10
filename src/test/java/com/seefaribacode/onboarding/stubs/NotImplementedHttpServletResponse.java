@@ -1,4 +1,4 @@
-package com.seefaribacode.onboarding;
+package com.seefaribacode.onboarding.stubs;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.Locale;
 
-class NotImplementedHttpServletResponse implements HttpServletResponse {
+public class NotImplementedHttpServletResponse implements HttpServletResponse {
     public void addCookie(Cookie cookie) {
         throw new UnsupportedOperationException("Not Implemented!");
     }
