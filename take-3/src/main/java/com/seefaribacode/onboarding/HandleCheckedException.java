@@ -4,14 +4,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class Exception extends Throwable {
-    static PrintWriter handleWriter(HttpServletResponse res) {
+class HandleCheckedException extends Throwable {
+    static PrintWriter getWriter(HttpServletResponse res) {
         try {
             return res.getWriter();
         } catch (IOException e) {
             System.out.println("Could not invoke getWriter()");
             System.out.println(e.toString());;
-            return null;
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 }

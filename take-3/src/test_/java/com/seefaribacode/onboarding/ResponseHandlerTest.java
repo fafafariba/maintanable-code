@@ -48,7 +48,7 @@ public class ResponseHandlerTest {
         String expectedBody = "<h1>ADD ERROR</h1>\n" +
                 "<p>Check the logs</p>\n";
         HttpResponseHandler addResponseHandler = new AddResponseHandler();
-        HttpServletAddRequestStub reqStub = new HttpServletAddRequestStub("3000000000", "7000000000");
+        HttpServletAddRequestStub reqStub = new HttpServletAddRequestStub("a", "b");
         HttpServletResponseStub resStub = new HttpServletResponseStub();
 
         //when

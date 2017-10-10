@@ -8,7 +8,7 @@ class NotFoundResponseHandler implements HttpResponseHandler{
     @Override
     public void writeToBody(HttpServletRequest req, HttpServletResponse res) {
         res.setContentType("text/html");
-        PrintWriter output = Exception.handleWriter(res);
+        PrintWriter output = HandleCheckedException.getWriter(res);
         output.println("<h1>Page Not Found</h1>");
     }
 }

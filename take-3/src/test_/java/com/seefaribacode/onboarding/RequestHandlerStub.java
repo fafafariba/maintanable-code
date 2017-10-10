@@ -3,7 +3,7 @@ package com.seefaribacode.onboarding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-class RequestHandlerStub extends RequestHandler {
+class RequestHandlerStub implements RequestHandler {
     UriMapping routeMap;
     UriRouteHandler routeHandler;
     HttpServletRequest req;
@@ -13,7 +13,6 @@ class RequestHandlerStub extends RequestHandler {
 
 
     public RequestHandlerStub(UriMapping routeMap, UriRouteHandler routeHandler) {
-        super(routeMap, routeHandler);
         this.req = null;
         this.res = null;
     }
