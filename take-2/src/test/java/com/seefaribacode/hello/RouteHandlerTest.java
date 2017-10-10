@@ -66,6 +66,7 @@ public class RouteHandlerTest {
             throw new UnsupportedOperationException("Not Implemented!");
         }
     }
+
     class DefaultHandler implements ResponseHandler{
         @Override
         public void writeToResponseBody(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
