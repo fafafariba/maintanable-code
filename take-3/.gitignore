@@ -1,15 +1,6 @@
-<<<<<<< HEAD
-.DS_Store
-=======
-target/
-.DS_Store
-*.iml.DS_Store
->>>>>>> 1025f2012994265f15113e67be97d599efe8dfee
-.idea/
-*.iml
-jetty-runner.jar
-target/
-<<<<<<< HEAD
-=======
 
->>>>>>> 1025f2012994265f15113e67be97d599efe8dfee
+target/
+.DS_Store
+*.iml
+.idea/
+jetty-runner.jar
